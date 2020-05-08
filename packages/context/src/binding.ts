@@ -176,6 +176,15 @@ type ValueGetter<T> = (
 ) => ValueOrPromise<T | undefined>;
 
 /**
+ * A factory function for `toDynamicValue`
+ */
+export type ValueFactory<T = unknown> = (
+  ctx: Context,
+  binding: Readonly<Binding<T>>,
+  options: ResolutionOptions,
+) => ValueOrPromise<T>;
+
+/**
  * Binding represents an entry in the `Context`. Each binding has a key and a
  * corresponding value getter.
  */
@@ -539,13 +548,13 @@ export class Binding<T = BoundValue> extends EventEmitter {
    * );
    * ```
    */
-  toDynamicValue(factoryFn: () => ValueOrPromise<T>): this {
+  toDynamicValue(factoryFn: ValueFactory<T>): this {
     /* istanbul ignore if */
     if (debug.enabled) {
       debug('Bind %s to dynamic value:', this.key, factoryFn);
     }
     this._type = BindingType.DYNAMIC_VALUE;
-    this._setValueGetter(ctx => factoryFn());
+    this._setValueGetter((ctx, options) => factoryFn(ctx, this, options));
     return this;
   }
 

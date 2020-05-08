@@ -83,6 +83,21 @@ binding.toDynamicValue(() => new Date());
 binding.toDynamicValue(() => Promise.resolve('my-value'));
 ```
 
+The factory function can receive extra information about the context, binding,
+and resolution options.
+
+```ts
+import {ValueFactory} from '@loopback/context';
+
+// The factory function now have access extra metadata about the resolution
+const factory: ValueFactory<string> = (_ctx, _binding, options) => {
+  return `Hello, ${_ctx.name}#${
+    _binding.key
+  } ${options.session?.getBindingPath()}`;
+};
+const b = ctx.bind('msg').toDynamicValue(factory);
+```
+
 #### A class
 
 The binding can represent an instance of a class, for example, a controller. A
@@ -118,6 +133,9 @@ class MyValueProvider implements Provider<string> {
 
 binding.toProvider(MyValueProvider);
 ```
+
+The provider class serves as the wrapper to declare dependency injections. If
+dependency is not needed, `toDynamicValue` can be used instead.
 
 #### An alias
 
