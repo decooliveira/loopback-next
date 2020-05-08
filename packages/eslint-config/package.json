@@ -9,7 +9,7 @@
   "author": "IBM Corp.",
   "copyright.owner": "IBM Corp.",
   "license": "MIT",
-  "peerDependencies": {
+  "dependencies": {
     "@typescript-eslint/eslint-plugin": "^2.31.0",
     "@typescript-eslint/parser": "^2.31.0",
     "eslint": "^7.0.0",
