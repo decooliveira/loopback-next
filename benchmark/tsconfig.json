@@ -14,6 +14,9 @@
       "path": "../packages/testlab/tsconfig.json"
     },
     {
+      "path": "../packages/context/tsconfig.json"
+    },
+    {
       "path": "../examples/todo/tsconfig.json"
     },
     {
